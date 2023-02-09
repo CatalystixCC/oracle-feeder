@@ -59,7 +59,7 @@ export class Binance extends WebSocketQuoter {
     const symbols = this.symbols
       .map((symbol) => `${symbol.replace('/', '').toLowerCase()}@kline_1m`)
       .join('/')
-    this.connect(`wss://stream.binance.com:9443/stream?streams=${symbols}`)
+    this.connect(`wss://data-stream.binance.com:9443/stream?streams=${symbols}`)
   }
 
   protected onData(streamData: StreamData): void {
@@ -90,7 +90,7 @@ export class Binance extends WebSocketQuoter {
     // Get candles from Binance
     // reference: https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data
     const response = await fetch(
-      `https://api.binance.com/api/v3/klines?${toQueryString(params)}`
+      `https://data.binance.com/api/v3/klines?${toQueryString(params)}`
     ).then((res) => res.json())
 
     if (!response || !Array.isArray(response) || response.length < 1) {
